@@ -10,6 +10,24 @@ model：存放训练好的模型文件，使用时要确保正确加载。
 
 readme：即当前目录，项目文档说明，如运行指南、使用手册，使用前建议详读。
 
+本项目为第14题：基于人机协作的无人货柜结算的实时质量控制算法研究，采用yolo+deepsort算法实现。由于时间关系，只实现了部分商品的识别和追踪。
+## 1. 环境配置
+```bash
+conda create -n cargo python=3.7
+conda activate cargo
+pip install -r requirements.txt
+```
+
+## 2. 项目运行
+```bash
+# 下载yolo预训练模型（可选，若不手动下载程序也会自动下载）
+wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov5lu.pt -O ./Model/yolov5lu.pt
+python ./Demo/demo_cargo.py --video_path ./Code/cargo_videos/4124382499356963766.mp4
+```
+## 3. 输出结果
+代码将根据输入的视频生成添加了商品追踪框的结果视频，保存在Code文件夹下，并在命令行中输出识别的商品类别。
+
+
 同时针对课题详细情况，提醒您：​
 
 1、预计5月底回收课题结果，请您提前准备，比赛结果实时评测，评测频率分为两个阶段，5月24日前，每周评测1-2次，5月24-5月底，每2天评测1次。
