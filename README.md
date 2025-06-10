@@ -11,21 +11,41 @@ model：存放训练好的模型文件，使用时要确保正确加载。
 readme：即当前目录，项目文档说明，如运行指南、使用手册，使用前建议详读。
 
 本项目为第14题：基于人机协作的无人货柜结算的实时质量控制算法研究，采用yolo+deepsort算法实现。由于时间关系，只实现了康师傅茉莉茶系列500ml、康师傅冰红茶瓶装系列500ml、农夫山泉饮用天然水550ml、东方树叶茉莉花茶瓶装500ml的识别和追踪。目前的训练效果也不是很好。
-## 1. 环境配置
+
+我们使用了两种技术实现，一是yolo+deepsort方式，二是yolo-obb。两种方式所需的运行环境不一样。
+
+## 1. yolo+deepsort
+### 1.1 环境配置
 ```bash
-conda create -n cargo python=3.7
-conda activate cargo
-pip install -r requirements.txt
+conda create -n cargo1 python=3.7
+conda activate cargo1
+pip install -r requirements1.txt
 ```
 
-## 2. 项目运行
+### 1.2 项目运行
 ```bash
 # 下载yolo预训练模型（可选，若不手动下载程序也会自动下载）
 wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov5lu.pt -O ./Model/yolov5lu.pt
-python ./Demo/demo_cargo.py --video_path ./Code/cargo_videos/4124382722695262447.mp4 --ground_truth binghongcha
+python ./Demo/demo1_yolo_deepsort.py --video_path ./Code/cargo_videos/4124382722695262447.mp4 --ground_truth binghongcha
 ```
 - video_path: 需检测的视频路径
 - ground_truth: 视频中存在的商品类别（目前只支持molihuacha, binghongcha, nongfushanquan, dongfangshuye），用于判断程序检测结果是否正确
+
+## 2. yolo-obb
+### 2.1 环境配置
+```bash
+conda create -n cargo2 python=3.9
+conda activate cargo2
+pip install ultralytics
+```
+
+### 2.2 项目运行
+```bash
+python ./Demo/demo2_yolo_obb.py --video_path ./Code/cargo_videos/4124382499356963766.mp4 --ground_truth molihuacha
+```
+- video_path: 需检测的视频路径
+- ground_truth: 视频中存在的商品类别（目前只支持molihuacha, binghongcha, nongfushanquan, dongfangshuye），用于判断程序检测结果是否正确
+
 ## 3. 输出结果
 代码将根据输入的视频生成添加了商品追踪框的结果视频，保存在Code文件夹下，并在命令行中输出识别的商品类别、精确率。
 
